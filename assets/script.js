@@ -3,9 +3,9 @@
 
 	var app = {
 		// how many days from today
-		days: 30,
+		days: 100,
 		// currencies sorted by market capital,
-		cryptocurrenciesAmount: 5,
+		cryptocurrenciesAmount: 100,
 		// to which prices you want to transfer
 		fiat: 'USD',
 
@@ -30,6 +30,28 @@
 		},
 
 		/********************
+		* save data to the file
+		*
+		* @parameter - format (csv, xml, json), data
+		* 
+		*/
+		saveFile: function(data) {
+			$.ajax({
+				url: './save',
+				method: 'POST',
+				dataType: 'json',
+				data: {
+					data: JSON.stringify(data)
+				},
+				success: function(data) {
+					$('.loading').remove();
+					$('#app').append('<a class="button" href="./data/data.json" download>Download .json</a><br />');
+					$('#app').append('<a class="button" href="./data/data.csv" download>Download .csv</a>');
+				}
+			});
+		},
+
+		/********************
 		* 1. get all currencies from ajax call
 		* 2. create request on all gotten currencies
 		* 3. save data into the currencies object
@@ -37,6 +59,7 @@
 		*
 		*/
 		init: function() {
+			$('#app').append('<div class="loading">Loading...</div>')
 			$.ajax({
 				url: './data-all-currencies',
 				method: 'POST',
@@ -61,6 +84,7 @@
 
 						// TODO: PROCESS DATA
 						console.log(data);
+						app.saveFile(data);
 					});
 				}
 			});

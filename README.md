@@ -7,4 +7,4 @@ Run `composer install`, then in `script.js` you can set some basic variables lik
 - `cryptocurrenciesAmount` - currencies sorted by market capital,
 - `fiat` - to which prices you want to transfer.
 
-Run index.php on your local/web server - you can download `.json`, `.xml` or `.csv` files for personal analyses.
+Run index.php on your local/web server - you can download `.json` or `.csv` files for personal analyses.

@@ -50,5 +50,41 @@ $app->post('/data-currency', function($request, $response, $args) {
     return $response->withJson(json_decode($data));
 });
 
+
+$app->post('/save', function($request, $response, $args) {
+
+    $data = $request->getParsedBody()['data']; // get POST data
+
+    $dataArray = json_decode($data);
+    $dataJson = json_encode($dataArray, JSON_PRETTY_PRINT);
+
+    // save json
+    $fJson = fopen('./data/data.json', 'w');
+    fwrite($fJson , $dataJson);
+    fclose($fJson);
+
+    // save csv
+    $fCsv = fopen('./data/data.csv', 'w');
+
+    foreach( $dataArray as $currency ) {
+        fputcsv($fCsv, array($currency->name));
+        fputcsv($fCsv, array('Time', 'Close', 'High', 'Low', 'Open', 'Volume From', 'Volume To'));
+
+        foreach( $currency->data as $day ) {
+            $arrayDay = json_decode(json_encode($day), True); // from stdObject to array
+
+            // transform date
+            $helpDate = $arrayDay['time'];
+            $date = new DateTime("@$helpDate");
+            $arrayDay['time'] = date_format($date, 'd.m.Y');
+            
+            fputcsv($fCsv, $arrayDay);
+        }
+    }
+    fclose($fCsv);
+
+    return $response->withJson(array('status' => 'OK'));
+});
+
 // run app
 $app->run();
