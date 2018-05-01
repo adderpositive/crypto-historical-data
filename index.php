@@ -67,8 +67,7 @@ $app->post('/save', function($request, $response, $args) {
     $fCsv = fopen('./data/data.csv', 'w');
 
     foreach( $dataArray as $currency ) {
-        fputcsv($fCsv, array($currency->name));
-        fputcsv($fCsv, array('Time', 'Close', 'High', 'Low', 'Open', 'Volume From', 'Volume To'));
+        fputcsv($fCsv, array('Time', 'Coin', 'Close', 'High', 'Low', 'Open', 'Volume From', 'Volume To'));
 
         foreach( $currency->data as $day ) {
             $arrayDay = json_decode(json_encode($day), True); // from stdObject to array
@@ -78,7 +77,16 @@ $app->post('/save', function($request, $response, $args) {
             $date = new DateTime("@$helpDate");
             $arrayDay['time'] = date_format($date, 'd.m.Y');
             
-            fputcsv($fCsv, $arrayDay);
+            fputcsv($fCsv, array(
+                $arrayDay['time'],
+                $currency->name,
+                $arrayDay['close'],
+                $arrayDay['high'],
+                $arrayDay['low'],
+                $arrayDay['open'],
+                $arrayDay['volumefrom'],
+                $arrayDay['volumeto']
+            ));
         }
     }
     fclose($fCsv);
