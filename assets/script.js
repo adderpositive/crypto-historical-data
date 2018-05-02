@@ -3,9 +3,9 @@
 
 	var app = {
 		// how many days from today
-		days: 100,
+		days: 7,
 		// currencies sorted by market capital,
-		cryptocurrenciesAmount: 100,
+		cryptocurrenciesAmount: 10,
 		// to which prices you want to transfer
 		fiat: 'USD',
 

@@ -8,3 +8,6 @@ Run `composer install`, then in `script.js` you can set some basic variables lik
 - `fiat` - to which prices you want to transfer.
 
 Run index.php on your local/web server - you can download `.json` or `.csv` files for personal analyses.
+
+## TODO
+- update https://api.coinmarketcap.com/v1/ to version 2
