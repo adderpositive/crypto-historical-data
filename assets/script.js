@@ -8,6 +8,8 @@
 		cryptocurrenciesAmount: 10,
 		// to which prices you want to transfer
 		fiat: 'USD',
+		// day to
+		dateTo: null,
 
 
 		/********************
@@ -24,15 +26,22 @@
 				symbol = 'IOT';
 			}
 
+			// default given data
+			var data = {
+				limit: app.days - 1, // amount of days
+				fiat: app.fiat,
+				cryptoCurrency: symbol,
+			};
+
+			if(app.dateTo) {
+				data.timestamp = app.dateTo / 1000; // to seconds
+			}
+
 			return $.ajax({
 				url: './data-currency',
 				method: 'POST',
 				dataType: 'json',
-				data: {
-					limit: app.days,
-					fiat: app.fiat,
-					cryptoCurrency: symbol,
-				}
+				data: data
 			});
 		},
 
@@ -52,6 +61,7 @@
 				},
 				success: function(data) {
 					$('.loading').remove();
+					$('.button,br').remove();
 					$('#app').append('<a class="button" href="./data/data.json" download>Download .json</a><br />');
 					$('#app').append('<a class="button" href="./data/data.csv" download>Download .csv</a>');
 				}
@@ -106,5 +116,12 @@
 		}
 	};
 
-	app.init();
+	$('.button-primary').click(function() {
+		app.dateTo = $('#date-to').val() ? Date.parse($('#date-to').val()) : null;
+		app.days = Number($('#days').val()) > 0 ? Number($('#days').val()) : 10;
+
+		console.log(app);
+		app.init();
+	});
+	
 }());

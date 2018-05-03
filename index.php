@@ -47,7 +47,17 @@ $app->post('/data-currency', function($request, $response, $args) {
 
     $data = $request->getParsedBody(); // get POST data
 
-    $data = file_get_contents('https://min-api.cryptocompare.com/data/histoday?fsym=' . $data['cryptoCurrency'] . '&tsym=' . $data['fiat'] . '&limit=' . $data['limit']); // get document
+    $link =  
+        'https://min-api.cryptocompare.com/data/histoday?'
+        . 'fsym=' . $data['cryptoCurrency']
+        . '&tsym=' . $data['fiat']
+        . '&limit=' . $data['limit'];
+
+    if(isset($data['timestamp'])) {
+        $link .= '&toTs=' . $data['timestamp'];
+    }
+
+    $data = file_get_contents($link); // get document
     return $response->withJson(json_decode($data));
 });
 
