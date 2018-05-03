@@ -39,7 +39,7 @@ $app->post('/data-all-currencies', function($request, $response, $args) {
     $data = $request->getParsedBody(); // get POST data
 
     // TODO: update to version 2
-    $cryptoData = file_get_contents('https://api.coinmarketcap.com/v1/ticker/?limit=' . $data['amount']);
+    $cryptoData = file_get_contents('https://api.coinmarketcap.com/v2/ticker/?limit=' . $data['amount']);
     return $response->withJson(json_decode($cryptoData));
 });
 

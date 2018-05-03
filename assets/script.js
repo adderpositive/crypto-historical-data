@@ -17,6 +17,13 @@
 		* @return - ajax function
 		*/
 		single: function (crypto) {
+			var symbol = crypto.symbol;
+
+			// exceptions
+			if(crypto.symbol === 'MIOTA') {
+				symbol = 'IOT';
+			}
+
 			return $.ajax({
 				url: './data-currency',
 				method: 'POST',
@@ -24,7 +31,7 @@
 				data: {
 					limit: app.days,
 					fiat: app.fiat,
-					cryptoCurrency: crypto.symbol,
+					cryptoCurrency: symbol,
 				}
 			});
 		},
@@ -59,7 +66,8 @@
 		*
 		*/
 		init: function() {
-			$('#app').append('<div class="loading">Loading...</div>')
+			$('#app').append('<div class="loading">Loading...</div>'); // add loading element
+
 			$.ajax({
 				url: './data-all-currencies',
 				method: 'POST',
@@ -67,24 +75,31 @@
 				data: {
 					amount: app.cryptocurrenciesAmount
 				},
-				success: function(data) {
-					var requests = [];
+				success: function(response) {
+					var requests = [],
+						data = response.data;
+						dataKeys = Object.keys(data),
+						dataArray = [];
 
-					// create requests
-					for(var i = 0; i < data.length; i++) {
-						requests.push(app.single(data[i]));
+					// sorted keys
+					dataKeys.sort(function(a, b) {
+						return data[a].rank - data[b].rank;
+					});
+
+					for(var i = 0; i < dataKeys.length; i++) {
+						dataArray.push(data[dataKeys[i]]); // push to array item by rank
+						requests.push(app.single(dataArray[i])); // create requests
 					}
 
 					// aysnchronous operation - waiting for all requests will be done
 					$.when.apply(null, requests).then(function() {
 
 						for(var i = 0; i < arguments.length; i++) {
-							data[i].data = arguments[i][0].Data;
+							dataArray[i].data = arguments[i][0].Data;
 						}
 
-						// TODO: PROCESS DATA
-						console.log(data);
-						app.saveFile(data);
+						console.log(dataArray);
+						app.saveFile(dataArray);
 					});
 				}
 			});
