@@ -117,11 +117,31 @@
 	};
 
 	$('.button-primary').click(function() {
-		app.dateTo = $('#date-to').val() ? Date.parse($('#date-to').val()) : null;
-		app.days = Number($('#days').val()) > 0 ? Number($('#days').val()) : 10;
+		if($('#date-to').val()) {
+			app.dateTo = Date.parse($('#date-to').val());
+		}
+
+		if(Number($('#days').val()) > 0) {
+			app.days = Number($('#days').val());
+		}
+
+		if(Number($('#amount').val())) {
+			app.cryptocurrenciesAmount = Number($('#amount').val());
+		}
+
+		if($('#fiat').val().length > 0) {
+			app.fiat = $('#fiat').val()
+		}
 
 		console.log(app);
 		app.init();
 	});
 	
+	$('.js-show-settings').click(function() {
+		var $this = $(this),
+			$parent = $this.parents('.settings-wrap');
+		$parent.find('.settings').slideDown(400);
+		$this.hide();
+		$parent.find('p').hide();
+	});
 }());

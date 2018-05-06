@@ -834,7 +834,7 @@ there.
 
 .header {
   margin-top: 150px;
-  padding-bottom: 50px;
+  padding-bottom: 30px;
 }
 
 .header h1,
@@ -847,6 +847,22 @@ there.
   text-align: center;
 }
 
+.settings {
+  display: none;
+  max-width: 500px;
+  margin: 0 auto;
+}
+
+input.button-primary--big {
+  padding: 0 50px;
+  height: 50px;
+  font-size: 18px;
+}
+
+.text-center {
+  text-align: center;
+  font-size: 11px;
+}
 
 /* Larger than mobile */
 @media (min-width: 400px) {}
