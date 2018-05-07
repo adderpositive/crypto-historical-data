@@ -19,17 +19,24 @@
 		* @return - ajax function
 		*/
 		single: function (crypto) {
-			var symbol = crypto.symbol;
+			var symbol = crypto.symbol,
+				fiat = app.fiat;
 
 			// exceptions
 			if(crypto.symbol === 'MIOTA') {
 				symbol = 'IOT';
 			}
 
+			// if fiat is BTC & crypto is BTC - api will response
+			// with error message
+			if(app.fiat === 'BTC' && crypto.symbol === 'BTC') {
+				fiat = 'USD';
+			}
+
 			// default given data
 			var data = {
 				limit: app.days - 1, // amount of days
-				fiat: app.fiat,
+				fiat: fiat,
 				cryptoCurrency: symbol,
 			};
 
@@ -72,6 +79,7 @@
 			});
 		},
 
+		// preloader
 		addPreloader: function() {
 			$('body').append(
 				'<div class="preloader">' +
@@ -135,6 +143,20 @@
 
 						for(var i = 0; i < arguments.length; i++) {
 							dataArray[i].data = arguments[i][0].Data;
+
+							// if fiat is BTC & crypto is BTC - api will response
+							// with error message
+							if(app.fiat === 'BTC' && dataArray[i].symbol === 'BTC') {
+								for(var j = 0; j < dataArray[i].data.length; j++) {
+									dataArray[i].data[j].close = 1;
+									dataArray[i].data[j].high = 1;
+									dataArray[i].data[j].low = 1;
+									dataArray[i].data[j].open = 1;
+									dataArray[i].data[j].time = 1;									
+									dataArray[i].data[j].volumefrom = 1;
+									dataArray[i].data[j].volumeto = 1;
+								}
+							}
 						}
 
 						console.log(dataArray);
@@ -145,7 +167,8 @@
 		}
 	};
 
-	$('.button-primary').click(function() {
+	// search data
+	$('.js-search').click(function() {
 		if($('#date-to').val()) {
 			app.dateTo = Date.parse($('#date-to').val());
 		}
@@ -166,6 +189,7 @@
 		app.init();
 	});
 	
+	// show settings
 	$('.js-show-settings').click(function() {
 		var $this = $(this),
 			$parent = $this.parents('.settings-wrap');
