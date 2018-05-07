@@ -60,12 +60,41 @@
 					data: JSON.stringify(data)
 				},
 				success: function(data) {
-					$('.loading').remove();
+					$('.preloader').remove();
 					$('.button,br').remove();
-					$('#app').append('<a class="button" href="./data/data.json" download>Download .json</a><br />');
-					$('#app').append('<a class="button" href="./data/data.csv" download>Download .csv</a>');
+					$('#app').append(
+						'<div class="button-wrap">' +
+							'<a class="button" href="./data/data.json" download>Download .json</a><br />' +
+							'<a class="button" href="./data/data.csv" download>Download .csv</a>' +
+						'</div>'
+					);
 				}
 			});
+		},
+
+		addPreloader: function() {
+			$('body').append(
+				'<div class="preloader">' +
+					'<div class="rocket-trajectory">' +
+						'<div class="rocket">' +
+							'<i class="rocket__fuel rocket__fuel--1"></i>' +
+							'<i class="rocket__fuel rocket__fuel--2"></i>' +
+						'</div>' +
+					'</div>' +
+					'<div class="preloader__loading">Loading data<span class="js-dot"></span></div>' +
+				'</div>'
+			);
+
+			// animate loading dots
+			setInterval(function() {
+				var $dots = $('.js-dot');
+					dotsLen = $dots.text().length;
+				if(dotsLen < 3) {
+					$dots.text($dots.text() + '.');
+				} else {
+					$dots.text('');
+				}	
+			}, 500);
 		},
 
 		/********************
@@ -76,7 +105,7 @@
 		*
 		*/
 		init: function() {
-			$('#app').append('<div class="loading">Loading...</div>'); // add loading element
+			app.addPreloader();
 
 			$.ajax({
 				url: './data-all-currencies',

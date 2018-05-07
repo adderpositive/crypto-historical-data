@@ -209,7 +209,6 @@ figure {
  */
 
 hr {
-  -moz-box-sizing: content-box;
   box-sizing: content-box;
   height: 0;
 }
@@ -355,9 +354,7 @@ input[type="number"]::-webkit-outer-spin-button {
  */
 
 input[type="search"] {
-  -webkit-appearance: textfield; /* 1 */
-  -moz-box-sizing: content-box;
-  -webkit-box-sizing: content-box; /* 2 */
+  -webkit-appearance: textfield; /* 1 */ /* 2 */
   box-sizing: content-box;
 }
 
@@ -862,6 +859,100 @@ input.button-primary--big {
 .text-center {
   text-align: center;
   font-size: 11px;
+}
+
+.preloader {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(255, 255, 255, .7);
+  overflow: hidden;
+}
+
+.preloader__loading {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  line-height: 50px;
+  min-height: 50px;
+  background-color: #000;
+  color: #fff;
+  font-size: 18px;
+  text-align: center;
+  font-weight: 700;
+}
+
+@-webkit-keyframes trajectory {
+  0% {
+    -webkit-transform: rotate(0deg);
+            transform: rotate(0deg);
+  }
+
+  100% {
+    -webkit-transform: rotate(70deg);
+            transform: rotate(70deg);
+  }
+}
+
+@keyframes trajectory {
+  0% {
+    -webkit-transform: rotate(0deg);
+            transform: rotate(0deg);
+  }
+
+  100% {
+    -webkit-transform: rotate(70deg);
+            transform: rotate(70deg);
+  }
+}
+
+.rocket-trajectory {
+  position: absolute;
+  top: 0;
+  left: 0vw;
+  z-index: 666;
+  width: 200vw;
+  height: 200vw;
+  border-radius: 50%;
+  -webkit-transform: rotate(0deg) translateZ(0);
+          transform: rotate(0deg) translateZ(0);
+  will-change: transform;
+  -webkit-animation: trajectory 20s infinite;
+          animation: trajectory 20s infinite;
+}
+
+.rocket {
+  position: absolute;
+  top: 100vh;
+  left: 12vw;
+  height: 150px;
+  margin-top: -150px;
+  width: 40px;
+  background-color: #a9a9a9;
+  border-radius: 50% 50% 0 0;
+}
+
+.rocket__fuel {
+  content: "";
+  position: absolute;
+  bottom: 0;
+  width: 15px;
+  height: 50px;
+  background-color: #c1c1c1;
+}
+
+.rocket__fuel--1 {
+  right: -15px;
+  border-top-right-radius: 100% 25%;
+}
+
+.rocket__fuel--2 {
+  left: -15px;
+  height: 70px;
+  border-top-left-radius: 100% 25%;
 }
 
 /* Larger than mobile */
