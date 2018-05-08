@@ -10,6 +10,8 @@
 		fiat: 'USD',
 		// day to
 		dateTo: null,
+		// preloader interval
+		preloaderInterval: null,
 
 
 		/********************
@@ -68,13 +70,17 @@
 				},
 				success: function(data) {
 					$('.preloader').remove();
-					$('#app').append(
-						'<div class="button-wrap">' +
-							'<a class="button" href="./data/data.json" download>Download .json</a><br />' +
-							'<a class="button" href="./data/data.csv" download>Download .csv</a><br />' +
-							'<a class="button js-table-open" href="#">Just show data</a>' +
-						'</div>'
-					);
+					clearInterval(preloaderInterval);
+
+					if(!$('.download-buttons').length > 0) {
+						$('#app').append(
+							'<div class="button-wrap download-buttons">' +
+								'<a class="button" href="./data/data.json" download>Download .json</a><br />' +
+								'<a class="button" href="./data/data.csv" download>Download .csv</a><br />' +
+								'<a class="button js-table-open" href="#">Just show data</a>' +
+							'</div>'
+						);
+					}
 
 					// add open event
 					$('.js-table-open').click(function() {
@@ -104,7 +110,7 @@
 			);
 
 			// animate loading dots
-			setInterval(function() {
+			preloaderInterval = setInterval(function() {
 				var $dots = $('.js-dot');
 					dotsLen = $dots.text().length;
 				if(dotsLen < 3) {
@@ -136,23 +142,28 @@
 				}
 			}
 
-			$('.js-table').append(
-				'<table class="u-full-width">' +
-					'<thead>' +
-						'<tr>' +
-							'<th>Date</th>' +
-							'<th>Coin</th>' +
-							'<th>Close</th>' +
-							'<th>High</th>' +
-							'<th>Low</th>' +
-							'<th>Open</th>' +
-							'<th>Volume from</th>' +
-							'<th>Volume to</th>' +
-						'</tr>' +
-					'</thead>' +
-					'<tbody></tbody>' +
-				'</table>'
-			);
+			// create table if not exist else remove data from body
+			if(!$('.js-table')[0].childNodes.length > 0) {
+				$('.js-table').append(
+					'<table class="u-full-width">' +
+						'<thead>' +
+							'<tr>' +
+								'<th>Date</th>' +
+								'<th>Coin</th>' +
+								'<th>Close</th>' +
+								'<th>High</th>' +
+								'<th>Low</th>' +
+								'<th>Open</th>' +
+								'<th>Volume from</th>' +
+								'<th>Volume to</th>' +
+							'</tr>' +
+						'</thead>' +
+						'<tbody></tbody>' +
+					'</table>'
+				);
+			} else {
+				$('tbody > tr').remove();
+			}
 
 			for(var i = 0; i < $dataRows.length; i++) {
 				$('tbody').append($dataRows[i]);
