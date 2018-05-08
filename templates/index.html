@@ -5,52 +5,57 @@
 	<link rel="stylesheet" type="text/css" href="./assets/styles.css?v={{ version }}" />
 </head>
 <body>
-	<main class="container" id="app">
-		<header class="header">
-			<h1>Historical cryptocurrencies data</h1>
-			<p>A small web script to get historical prices of cryptocurrencies builded on data from - <a href="https://min-api.cryptocompare.com/" target="_blank">https://min-api.cryptocompare.com/</a> and <a href="https://api.coinmarketcap.com/" target="_blank">https://api.coinmarketcap.com/</a>.</p>
-		</header>
-		<div class="settings-wrap">
+	<div class="page">
+		<main class="container" id="app">
+			<header class="header">
+				<h1>Historical cryptocurrencies data</h1>
+				<p>A small web script to get historical prices of cryptocurrencies builded on data APIs from - <a href="https://min-api.cryptocompare.com/" target="_blank">https://min-api.cryptocompare.com/</a> and <a href="https://api.coinmarketcap.com/" target="_blank">https://api.coinmarketcap.com/</a>. Default setting: data from 7 days ago to now, 10 top cryptocurrencies in USD fiat money. GNU general public license.</p>
+			</header>
+			<div class="settings-wrap">
+				<div class="button-wrap">
+					<a class="button js-show-settings" href="#">More settings &#11167;</a>
+				</div>
+				<div class="settings">
+					<div class="row">
+						<div class="twelve columns">
+							<label for="date-to">Date to:</label>
+							<input class="u-full-width" type="date" placeholder="" id="date-to" />
+						</div>
+					</div>
+					<div class="row">
+						<div class="twelve columns">
+							<label for="days">Days:</label>
+							<input class="u-full-width" type="number" placeholder="" id="days" min="1" />
+						</div>
+					</div>
+					<div class="row">
+						<div class="twelve columns">
+							<label for="amount">Amount of crypto currencies:</label>
+							<input class="u-full-width" type="number" placeholder="10 is default amount" id="amount" />
+						</div>
+					</div>
+					<div class="row">
+						<div class="twelve columns">
+							<label for="fiat">Fiat:</label>
+							<select class="u-full-width" id="fiat">
+								<option value="USD" selected>USD</option>
+								<option value="CZK">CZK</option>
+								<option value="EUR">EUR</option>
+								<option value="BTC">BTC</option>
+							</select>
+						</div>
+					</div>
+				</div>
+			</div>
 			<div class="button-wrap">
-				<a class="button js-show-settings" href="#">More settings &#11167;</a>
+				<input class="button-primary button-primary--big js-search" type="submit" value="Go for DATA!" />
 			</div>
-			<p class="text-center">Default setting: data from 7 day ago to now, 10 top cryptocurrencies in USD fiat money.</p>
-			<div class="settings">
-				<div class="row">
-					<div class="twelve columns">
-						<label for="date-to">Date to:</label>
-						<input class="u-full-width" type="date" placeholder="" id="date-to" />
-					</div>
-				</div>
-				<div class="row">
-					<div class="twelve columns">
-						<label for="days">Days:</label>
-						<input class="u-full-width" type="number" placeholder="" id="days" min="1" />
-					</div>
-				</div>
-				<div class="row">
-					<div class="twelve columns">
-						<label for="amount">Amount of crypto currencies:</label>
-						<input class="u-full-width" type="number" placeholder="10 is default amount" id="amount" />
-					</div>
-				</div>
-				<div class="row">
-					<div class="twelve columns">
-						<label for="fiat">Fiat:</label>
-						<select class="u-full-width" id="fiat">
-							<option value="USD" selected>USD</option>
-							<option value="CZK">CZK</option>
-							<option value="EUR">EUR</option>
-							<option value="BTC">BTC</option>
-						</select>
-					</div>
-				</div>
-			</div>
+		</main>
+		<div class="table-wrap">
+			<div class="container table-container js-table"></div>
+			<div class="table-close js-table-close"></div>
 		</div>
-		<div class="button-wrap">
-			<input class="button-primary button-primary--big js-search" type="submit" value="Go for DATA!" />
-		</div>
-	</main>
+	</div>
 	<script src="./assets/jquery.min.js"></script>
 	<script src="./assets/script.js?v={{ version }}"></script>
 </body>

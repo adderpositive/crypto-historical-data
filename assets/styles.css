@@ -955,6 +955,83 @@ input.button-primary--big {
   border-top-left-radius: 100% 25%;
 }
 
+.page {
+  min-height: 100vh;
+  overflow: hidden;
+}
+
+.table-wrap {
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 100;
+  -webkit-transform: translate3d(100%, 0, 0);
+          transform: translate3d(100%, 0, 0);
+  will-change: transform;
+  height: 100%;
+  width: 100%;
+  transition: -webkit-transform .5s;
+  transition: transform .5s;
+  transition: transform .5s, -webkit-transform .5s;
+  overflow: auto;
+  background-color: #fff;
+}
+
+.table-wrap.active {
+  -webkit-transform: translate3d(0, 0, 0);
+          transform: translate3d(0, 0, 0);
+}
+
+.table-container {
+  padding-top: 100px;
+  
+}
+
+.table-close {
+  position: absolute;
+  top: 50px;
+  right: 50px;
+  width: 50px;
+  height: 50px;
+  cursor: pointer;
+  -webkit-transform: scale(1) translateZ(0);
+          transform: scale(1) translateZ(0);
+  will-change: transform;
+  transition: -webkit-transform .2s;
+  transition: transform .2s;
+  transition: transform .2s, -webkit-transform .2s;
+}
+
+.table-close:hover {
+  -webkit-transform: scale(1.2);
+          transform: scale(1.2);
+}
+
+.table-close::before,
+.table-close::after {
+  content: "";
+  position: absolute;
+  top: 50%;
+  left: 0;
+  width: 100%;
+  height: 2px;
+  border-radius: 1px;
+  margin-top: -1px;
+  background-color: #000;
+  -webkit-transform-origin: 50% 50%;
+          transform-origin: 50% 50%;
+}
+
+.table-close::before {
+  -webkit-transform: rotate(45deg);
+          transform: rotate(45deg);
+}
+
+.table-close::after {
+  -webkit-transform: rotate(-45deg);
+          transform: rotate(-45deg);
+}
+
 /* Larger than mobile */
 @media (min-width: 400px) {}
 

@@ -77,7 +77,7 @@ $app->post('/save', function($request, $response, $args) {
     // save csv
     $fCsv = fopen('./data/data.csv', 'w');
 
-    fputcsv($fCsv, array('Time', 'Coin', 'Close', 'High', 'Low', 'Open', 'VolumeFrom', 'VolumeTo'), ';');
+    fputcsv($fCsv, array('Date', 'Coin', 'Close', 'High', 'Low', 'Open', 'VolumeFrom', 'VolumeTo'), ';');
     foreach( $dataArray as $currency ) {
 
         foreach( $currency->data as $day ) {

@@ -68,13 +68,23 @@
 				},
 				success: function(data) {
 					$('.preloader').remove();
-					$('.button,br').remove();
 					$('#app').append(
 						'<div class="button-wrap">' +
 							'<a class="button" href="./data/data.json" download>Download .json</a><br />' +
-							'<a class="button" href="./data/data.csv" download>Download .csv</a>' +
+							'<a class="button" href="./data/data.csv" download>Download .csv</a><br />' +
+							'<a class="button js-table-open" href="#">Just show data</a>' +
 						'</div>'
 					);
+
+					// add open event
+					$('.js-table-open').click(function() {
+						$('.table-wrap').addClass('active');
+					});
+
+					// add close event
+					$('.js-table-close').click(function() {
+						$('.table-wrap').removeClass('active');
+					});
 				}
 			});
 		},
@@ -103,6 +113,50 @@
 					$dots.text('');
 				}	
 			}, 500);
+		},
+
+		addHtmlTable: function(data) {
+			var $dataRows = [];
+
+			for(var i = 0; i < data.length; i++) {
+				for(var j = 0; j < data[i].data.length; j++) {
+					var date = new Date(data[i].data[j].time * 1000);
+					$dataRows.push($(
+						'<tr>' +
+							'<td>' + date.getDate() + '. ' + (date.getMonth() + 1) + '. ' + date.getFullYear() + '</td>' +
+							'<td>' + data[i].name + '</td>' +
+							'<td>' + data[i].data[j].close + '</td>' +
+							'<td>' + data[i].data[j].high + '</td>' +
+							'<td>' + data[i].data[j].low + '</td>' +
+							'<td>' + data[i].data[j].open + '</td>' +
+							'<td>' + data[i].data[j].volumefrom + '</td>' +
+							'<td>' + data[i].data[j].volumeto + '</td>' +
+						'</tr>'
+					));
+				}
+			}
+
+			$('.js-table').append(
+				'<table class="u-full-width">' +
+					'<thead>' +
+						'<tr>' +
+							'<th>Date</th>' +
+							'<th>Coin</th>' +
+							'<th>Close</th>' +
+							'<th>High</th>' +
+							'<th>Low</th>' +
+							'<th>Open</th>' +
+							'<th>Volume from</th>' +
+							'<th>Volume to</th>' +
+						'</tr>' +
+					'</thead>' +
+					'<tbody></tbody>' +
+				'</table>'
+			);
+
+			for(var i = 0; i < $dataRows.length; i++) {
+				$('tbody').append($dataRows[i]);
+			}
 		},
 
 		/********************
@@ -159,7 +213,7 @@
 							}
 						}
 
-						console.log(dataArray);
+						app.addHtmlTable(dataArray);
 						app.saveFile(dataArray);
 					});
 				}
@@ -185,7 +239,6 @@
 			app.fiat = $('#fiat').val()
 		}
 
-		console.log(app);
 		app.init();
 	});
 	
@@ -195,6 +248,5 @@
 			$parent = $this.parents('.settings-wrap');
 		$parent.find('.settings').slideDown(400);
 		$this.hide();
-		$parent.find('p').hide();
 	});
 }());
