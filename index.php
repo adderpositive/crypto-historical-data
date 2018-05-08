@@ -77,8 +77,8 @@ $app->post('/save', function($request, $response, $args) {
     // save csv
     $fCsv = fopen('./data/data.csv', 'w');
 
+    fputcsv($fCsv, array('Time', 'Coin', 'Close', 'High', 'Low', 'Open', 'VolumeFrom', 'VolumeTo'), ';');
     foreach( $dataArray as $currency ) {
-        fputcsv($fCsv, array('Time', 'Coin', 'Close', 'High', 'Low', 'Open', 'Volume From', 'Volume To'));
 
         foreach( $currency->data as $day ) {
             $arrayDay = json_decode(json_encode($day), True); // from stdObject to array
@@ -91,13 +91,14 @@ $app->post('/save', function($request, $response, $args) {
             fputcsv($fCsv, array(
                 $arrayDay['time'],
                 $currency->name,
-                $arrayDay['close'],
-                $arrayDay['high'],
-                $arrayDay['low'],
-                $arrayDay['open'],
-                $arrayDay['volumefrom'],
-                $arrayDay['volumeto']
-            ));
+                str_replace('.', ',', $arrayDay['close']),
+                str_replace('.', ',', $arrayDay['high']),
+                str_replace('.', ',', $arrayDay['low']),
+                str_replace('.', ',', $arrayDay['open']),
+                str_replace('.', ',', $arrayDay['volumefrom']),
+                str_replace('.', ',', $arrayDay['volumeto'])
+            ),
+            ';');
         }
     }
     fclose($fCsv);
