@@ -1,7 +1,9 @@
-# crypto-historical-data
+# Crypto historical data
 A small web script to get historical prices of cryptocurrencies builded on data from - https://min-api.cryptocompare.com/ and https://api.coinmarketcap.com/. Default setting: data from 7 days ago to now, 10 top cryptocurrencies in USD fiat money. GNU general public license.
 
 Run index.php on your local/web server - you can download `.json`,`.csv` files for personal analyses or you can just watch data.
+
+You can try demo [here](http://crypto-data.homolamartin.cz/).
 
 ## Data you will get (example):
 
@@ -13,4 +15,6 @@ Run index.php on your local/web server - you can download `.json`,`.csv` files f
 | 5. 5. 2018  | Bitcoin | 9845.9  | 9968.85 | 9687.09 | 9700.37 | 68875.75    |  679872376.4 |
 
 ## TODO
+- change date to more friendly UX
 - add styles to rocket! <3
+- rewrite to vanila JS
