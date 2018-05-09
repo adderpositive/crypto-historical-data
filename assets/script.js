@@ -218,8 +218,7 @@
 									dataArray[i].data[j].close = 1;
 									dataArray[i].data[j].high = 1;
 									dataArray[i].data[j].low = 1;
-									dataArray[i].data[j].open = 1;
-									dataArray[i].data[j].time = 1;									
+									dataArray[i].data[j].open = 1;								
 									dataArray[i].data[j].volumefrom = 1;
 									dataArray[i].data[j].volumeto = 1;
 								}
