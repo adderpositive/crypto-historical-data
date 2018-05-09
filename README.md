@@ -1,5 +1,5 @@
-# Crypto historical data
-A small web script to get historical prices of cryptocurrencies builded on data from - https://min-api.cryptocompare.com/ and https://api.coinmarketcap.com/. Default setting: data from 7 days ago to now, 10 top cryptocurrencies in USD fiat money. GNU general public license.
+# Cryptocurrencies historical data
+A small web script to get historical prices of cryptocurrencies builded on data from - https://min-api.cryptocompare.com/ and https://api.coinmarketcap.com/. Default: last week's data, 10 top cryptocurrencies in USD fiat money. GNU general public license.
 
 Run index.php on your local/web server - you can download `.json`,`.csv` files for personal analyses or you can just watch data.
 

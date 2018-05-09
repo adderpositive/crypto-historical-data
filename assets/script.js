@@ -10,6 +10,8 @@
 		fiat: 'USD',
 		// day to
 		dateTo: null,
+		// day to
+		dateFrom: null,
 		// preloader interval
 		preloaderInterval: null,
 
@@ -37,7 +39,7 @@
 
 			// default given data
 			var data = {
-				limit: app.days - 1, // amount of days
+				limit: app.days, // amount of days
 				fiat: fiat,
 				cryptoCurrency: symbol,
 			};
@@ -232,14 +234,55 @@
 		}
 	};
 
+
+	// TODO: more code readable
+	// on window ready set dates
+	var today = new Date();
+		beforeWeek = new Date();
+
+	beforeWeek.setDate(today.getDate() - 6);
+
+	function formatDateForInput(date) {
+		var years = date.getFullYear(),
+			months = date.getMonth() + 1,
+			days = date.getDate();
+
+		if(months < 10) {
+			months = '0' + months;
+		}
+
+		if(days < 10) {
+			days = '0' + days;
+		}
+
+		return years + '-' + months + '-' + days;
+	}
+
+	var _MS_PER_DAY = 1000 * 60 * 60 * 24;
+	// a and b are javascript Date objects
+	function dateDiffInDays(a, b) {
+		// Discard the time and time-zone information.
+		var utc1 = Date.UTC(a.getFullYear(), a.getMonth(), a.getDate());
+		var utc2 = Date.UTC(b.getFullYear(), b.getMonth(), b.getDate());
+
+		return Math.floor((utc2 - utc1) / _MS_PER_DAY);
+	}
+
+	$('#date-to').val(formatDateForInput(today));
+	$('#date-from').val(formatDateForInput(beforeWeek));
+
+	app.days = dateDiffInDays(beforeWeek, today);
+
+
+
 	// search data
 	$('.js-search').click(function() {
 		if($('#date-to').val()) {
 			app.dateTo = Date.parse($('#date-to').val());
 		}
 
-		if(Number($('#days').val()) > 0) {
-			app.days = Number($('#days').val());
+		if($('#date-from').val()) {
+			app.dateFrom = Date.parse($('#date-from').val());
 		}
 
 		if(Number($('#amount').val())) {
@@ -249,6 +292,10 @@
 		if($('#fiat').val().length > 0) {
 			app.fiat = $('#fiat').val()
 		}
+
+		app.days = dateDiffInDays(new Date(app.dateFrom), new Date(app.dateTo));
+
+		console.log(app);
 
 		app.init();
 	});
