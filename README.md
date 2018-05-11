@@ -17,4 +17,4 @@ You can try demo [here](http://crypto-data.homolamartin.cz/).
 ## TODO
 - change date to more friendly UX
 - add styles to rocket! <3
-- rewrite to vanila JS
+- rewrite to vanila JS with support for ECMAScript 6

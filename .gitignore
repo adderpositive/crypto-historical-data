@@ -1,3 +1,5 @@
 /vendor/
 /data/*
 !/data/.empty
+/node_modules/
+yarn-error.log
