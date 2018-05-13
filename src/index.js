@@ -81,7 +81,7 @@ import $ from 'jquery';
         success: function( data ) {
             var isButtonsExist = $( '.download-buttons' ).length;
           $( '.preloader' ).remove();
-          clearInterval( preloaderInterval );
+          clearInterval( app.preloaderInterval );
 
           if ( !isButtonsExist ) {
             $( '#app' ).append(
@@ -121,7 +121,7 @@ import $ from 'jquery';
       );
 
       // animate loading dots
-      preloaderInterval = setInterval( function() {
+      app.preloaderInterval = setInterval( function() {
         var $dots = $( '.js-dot' );
         var dotsLength = $dots.text().length;
 
