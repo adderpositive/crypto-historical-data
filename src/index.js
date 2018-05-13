@@ -1,4 +1,8 @@
 import $ from 'jquery';
+import {
+  formatDateForInput,
+  dateDifferenceInDays
+} from './helpers.js';
 
 ( function() {
   
@@ -263,36 +267,11 @@ import $ from 'jquery';
 
   beforeWeek.setDate( today.getDate() - 6 );
 
-  function formatDateForInput( date ) {
-    var years = date.getFullYear();
-    var months = date.getMonth() + 1;
-    var days = date.getDate();
-
-    if ( months < 10 ) {
-      months = '0' + months;
-    }
-
-    if ( days < 10 ) {
-      days = '0' + days;
-    }
-
-    return years + '-' + months + '-' + days;
-  }
-
-  var _MS_PER_DAY = 1000 * 60 * 60 * 24;
-  // a and b are javascript Date objects
-  function dateDiffInDays( a, b ) {
-    // Discard the time and time-zone information.
-    var utc1 = Date.UTC( a.getFullYear(), a.getMonth(), a.getDate() );
-    var utc2 = Date.UTC( b.getFullYear(), b.getMonth(), b.getDate() );
-
-    return Math.floor( ( utc2 - utc1 ) / _MS_PER_DAY );
-  }
 
   $( '#date-to' ).val( formatDateForInput( today ) );
   $( '#date-from' ).val( formatDateForInput( beforeWeek ) );
 
-  app.days = dateDiffInDays( beforeWeek, today );
+  app.days = dateDifferenceInDays( beforeWeek, today );
 
 
 
@@ -320,7 +299,7 @@ import $ from 'jquery';
       app.fiat = $( '#fiat' ).val()
     }
 
-    app.days = dateDiffInDays( new Date( app.dateFrom ), new Date( app.dateTo ) );
+    app.days = dateDifferenceInDays( new Date( app.dateFrom ), new Date( app.dateTo ) );
 
     console.log( app );
 
