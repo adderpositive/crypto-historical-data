@@ -23,3 +23,18 @@ export function dateDifferenceInDays( aObj, bObj ) {
 
 	return Math.floor( ( utc2 - utc1 ) / MS_PER_DAY );
 }
+
+export function getDates() {
+  let dateFrom = arguments[0] || new Date;
+  let dateTo = arguments[1] || new Date;
+
+  if( arguments[0] == null && arguments[1] == null ) {
+    dateTo.setDate( dateFrom.getDate() - 6 );
+  }
+
+  return {
+    dateFrom,
+    dateTo,
+    days: dateDifferenceInDays( dateTo, dateFrom )
+  }
+}
