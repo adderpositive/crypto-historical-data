@@ -15,6 +15,6 @@ You can try demo [here](http://crypto-data.homolamartin.cz/).
 | 5. 5. 2018  | Bitcoin | 9845.9  | 9968.85 | 9687.09 | 9700.37 | 68875.75    |  679872376.4 |
 
 ## TODO
-- change date to more friendly UX
+- remove jQuery
+- fix dates when to date is lower then from date
 - add styles to rocket! <3
-- rewrite to vanila JS with support for ECMAScript 6

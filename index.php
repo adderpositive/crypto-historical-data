@@ -28,7 +28,7 @@ $container['view'] = function ($container) {
     return $view;
 };
 
-$container['view']['version'] = '1.1.1';
+$container['view']['version'] = '1.2.0';
 
 $app->get('/', function ($request, $response, $args) {
     return $this->view->render($response, 'index.html');
@@ -39,7 +39,7 @@ $app->post('/data-all-currencies', function($request, $response, $args) {
     $data = $request->getParsedBody(); // get POST data
 
     // TODO: update to version 2
-    $cryptoData = file_get_contents('https://api.coinmarketcap.com/v2/ticker/?limit=' . $data['amount']);
+    $cryptoData = file_get_contents('https://api.coinmarketcap.com/v2/ticker/?limit=' . $data['amountOfCurrencies']);
     return $response->withJson(json_decode($cryptoData));
 });
 
@@ -49,11 +49,11 @@ $app->post('/data-currency', function($request, $response, $args) {
 
     $link =  
         'https://min-api.cryptocompare.com/data/histoday?'
-        . 'fsym=' . $data['cryptoCurrency']
+        . 'fsym=' . $data['symbol']
         . '&tsym=' . $data['fiat']
-        . '&limit=' . $data['limit'];
+        . '&limit=' . $data['days'];
 
-    if(isset($data['timestamp'])) {
+    if(isset($data['timestamp']) && !empty($data['timestamp'])) {
         $link .= '&toTs=' . $data['timestamp'];
     }
 
