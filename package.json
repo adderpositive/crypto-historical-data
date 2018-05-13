@@ -1,5 +1,5 @@
 {
-  "name": "crypti-historical-data",
+  "name": "crypto-historical-data",
   "version": "1.1.1",
   "description": "A small web script to get historical prices of cryptocurrencies builded on data from - https://min-api.cryptocompare.com/ and https://api.coinmarketcap.com/. Default: last week's data, 10 top cryptocurrencies in USD fiat money. GNU general public license.",
   "repository": "https://github.com/adderpositive/crypto-historical-data",
