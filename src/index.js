@@ -22,6 +22,7 @@ import * as dom from './dom.js';
 
   // search data
   $( '.js-search' ).click( function() {
+    const data = {};
 
     if ( $( '#date-to' ).val() ) {
       dateTo = Date.parse( $( '#date-to' ).val() );
@@ -40,10 +41,8 @@ import * as dom from './dom.js';
     }
 
     days = getDates( new Date( dateTo ), new Date( dateFrom ) ).days;
-
-    console.log(days,  getDates( new Date( dateTo ), new Date( dateFrom ) ));
-
-    const data = {
+    
+    data = {
       amountOfCurrencies: cryptocurrenciesAmount,
       fiat: fiat,
       days: days,
