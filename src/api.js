@@ -45,10 +45,10 @@ function getSingleCryptoData( data ) {
 /********************
  * save data to the file
  *
- * @parameter - format (csv, xml, json), data
+ * @parameter - saved data
  * 
  */
-function saveFile( data, interval ) {
+function saveFile( data ) {
   const dataArray = data;
 
   $.ajax( {
@@ -58,13 +58,13 @@ function saveFile( data, interval ) {
     data: {
       data: JSON.stringify( data )
     },
-    success: function( data ) {
-      dom.removePreloader( interval );
+    success: ( response ) => {
+      dom.removePreloader();
       dom.addButtons();
       dom.addTableEvents();
       dom.addTable( dataArray );
     }
-  } );
+  });
 }
 
 /********************
@@ -74,7 +74,7 @@ function saveFile( data, interval ) {
  * 4. process data
  *
  */
-export default function init( data, interval ) {
+export default function init( data ) {
   let {
     amountOfCurrencies,
     fiat,
@@ -91,21 +91,21 @@ export default function init( data, interval ) {
     data: {
       amountOfCurrencies
     },
-    success: function( response ) {
+    success: ( response ) => {
       const requests = [];
-      const data = response.data;
-      const dataKeys = Object.keys( data );
+      const dataResponse = response.data;
+      const dataKeys = Object.keys( dataResponse );
       const dataArray = [];
       let i;
 
       // sorted keys
-      dataKeys.sort( function( a, b ) {
-        return data[ a ].rank - data[ b ].rank;
+      dataKeys.sort(( a, b ) => {
+        return dataResponse[ a ].rank - dataResponse[ b ].rank;
       } );
 
       for ( i in dataKeys ) {
         // push to array item by rank
-        dataArray.push( data[ dataKeys[ i ] ] ); 
+        dataArray.push( dataResponse[ dataKeys[ i ] ] ); 
 
         // create requests
         requests.push( 
@@ -119,12 +119,12 @@ export default function init( data, interval ) {
       }
 
       // aysnchronous operation - waiting for all requests will be done
-      $.when.apply( null, requests ).then( function() {
+      $.when.apply( null, requests ).then((...args) => {
         let j;
         const isBTCException = fiat === 'BTC' && dataArray[ i ].symbol === 'BTC';
 
-        for ( j in arguments ) {
-          dataArray[ j ].data = arguments[ j ][ 0 ].Data;
+        for ( j in args ) {
+          dataArray[ j ].data = args[ j ][ 0 ].Data;
 
           if ( isBTCException ) {
             let h;
@@ -140,8 +140,8 @@ export default function init( data, interval ) {
           }
         }
 
-        saveFile( dataArray, interval );
-      } );
+        saveFile( dataArray );
+      });
     }
-  } );
+  });
 }

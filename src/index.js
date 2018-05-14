@@ -14,14 +14,12 @@ import * as dom from './dom.js';
   let dateTo = null;
   // day to
   let dateFrom = null;
-  // preloader interval
-  let preloaderInterval = null;
 
   days = getDates().days;
   dom.setDates();
 
   // search data
-  $( '.js-search' ).click( function() {
+  $( '.js-search' ).click(() => {
     const data = {};
 
     if ( $( '#date-to' ).val() ) {
@@ -36,20 +34,18 @@ import * as dom from './dom.js';
       cryptocurrenciesAmount = +$( '#amount' ).val();
     }
 
-    if ( $( '#fiat' ).val().length > 0 ) {
+    if ( $( '#fiat' ).val().length ) {
       fiat = $( '#fiat' ).val()
     }
 
     days = getDates( new Date( dateTo ), new Date( dateFrom ) ).days;
-    
-    data = {
-      amountOfCurrencies: cryptocurrenciesAmount,
-      fiat: fiat,
-      days: days,
-      timestamp: dateTo
-    }
 
-    init( data, preloaderInterval );
+    data.amountOfCurrencies = cryptocurrenciesAmount;
+    data.fiat = fiat;
+    data.days = days;
+    data.timestamp = dateTo;
+
+    init( data );
 
   });
 

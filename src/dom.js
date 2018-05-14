@@ -4,14 +4,16 @@ import {
   getDates
 } from './helpers.js';
 
+let interval = null;
+
 // preloader
-export function removePreloader( interval ) {
+export function removePreloader() {
   $( '.preloader' ).remove();
   clearInterval( interval );
 }
 
 
-export function addPreloader( interval ) {
+export function addPreloader() {
   $( 'body' ).append(
     '<div class="preloader">' +
     '<div class="rocket-trajectory">' +
@@ -25,11 +27,11 @@ export function addPreloader( interval ) {
   );
 
   // animate loading dots
-  interval = setInterval( function() {
-    var $dots = $( '.js-dot' );
-    var dotsLength = $dots.text().length;
+  interval = setInterval(() => {
+    const $dots = $( '.js-dot' );
+    const dotsLength = $dots.text().length < 3;
 
-    if ( dotsLength < 3 ) {
+    if ( dotsLength ) {
       $dots.text( $dots.text() + '.' );
     } else {
       $dots.text( '' );
@@ -38,17 +40,18 @@ export function addPreloader( interval ) {
 }
 
 export function addTable( data ) {
-  var $dataRows = [];
-  var i;
-  var isTableExist = $( '.js-table' )[ 0 ].childNodes.length;
-  var row;
+  const $dataRows = [];
+  const isTableExist = $( '.js-table' )[ 0 ].childNodes.length;
+  let i;
+  let row;
+  
 
   for ( i in data ) {
-    var j;
+    let j;
 
     for ( j in data[ i ].data ) {
-      var date = new Date( data[ i ].data[ j ].time * 1000 );
-      var formattedDate = date.getDate() + '. ' +
+      const date = new Date( data[ i ].data[ j ].time * 1000 );
+      const formattedDate = date.getDate() + '. ' +
         ( date.getMonth() + 1 ) +
         '. ' + date.getFullYear();
 
@@ -96,9 +99,9 @@ export function addTable( data ) {
 }
 
 export function addButtons() {
-  var isButtonsExist = $( '.download-buttons' ).length;
+  const isButtonsExist = $( '.download-buttons' ).length;
 
- if ( !isButtonsExist ) {
+  if ( !isButtonsExist ) {
         
     $( '#app' ).append(
       '<div class="button-wrap download-buttons">' +
@@ -110,17 +113,16 @@ export function addButtons() {
   }
 }
 
-
 export function addTableEvents() {
   // add open event
-  $( '.js-table-open' ).click( function() {
+  $( '.js-table-open' ).click(() => {
     $( '.table-wrap' ).addClass( 'active' );
-  } );
+  });
 
   // add close event
-  $( '.js-table-close' ).click( function() {
+  $( '.js-table-close' ).click(() => {
     $( '.table-wrap' ).removeClass( 'active' );
-  } );
+  });
 }
 
 export function setDates() {
@@ -129,7 +131,7 @@ export function setDates() {
 }
 
 export function eventSettings() {
-  $( '.js-show-settings' ).click( function() {
+  $( '.js-show-settings' ).click(() => {
     const $this = $( this );
     const $parent = $this.parents( '.settings-wrap' );
     
