@@ -1,9 +1,8 @@
-import $ from 'jquery';
 import { getDates } from './helpers.js';
 import init from './api.js';
 import * as dom from './dom.js';
 
-(function() {
+document.addEventListener('DOMContentLoaded', () => {
   // how many days - dateTo-dateFrom
   let days = 7;
   // currencies sorted by market capital
@@ -15,13 +14,15 @@ import * as dom from './dom.js';
   // day from
   let dateFrom = null;
 
+  const $searchEl = document.getElementsByClassName('js-search')[0];
+
   // initial form setting
   days = getDates().days;
   dom.setDates();
   dom.eventSettings();
 
   // search data event
-  $( '.js-search' ).click(() => {
+  $searchEl.addEventListener('click', () => {
     const data = {};
 
     dateTo = dom.getDateTo();
@@ -37,7 +38,7 @@ import * as dom from './dom.js';
 
       init( data );
     } else {
-      alert('Date from can not be bigger then Date to!')
+      alert('Date from can not be bigger or same then Date to!')
     }
   });
-}());
+});
