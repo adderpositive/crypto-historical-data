@@ -11,7 +11,7 @@ function getSingleCryptoData( data ) {
 
   /* Exception for MIOTA coin 
   */
-  if ( crypto.symbol === 'MIOTA' ) {
+  if ( symbol === 'MIOTA' ) {
     symbol = 'IOT';
   }
 

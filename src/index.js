@@ -3,6 +3,7 @@ import init from './api.js';
 import * as dom from './dom.js';
 
 document.addEventListener('DOMContentLoaded', () => {
+  const $searchEl = document.getElementsByClassName('js-search')[0];
   // how many days - dateTo-dateFrom
   let days = 7;
   // currencies sorted by market capital
@@ -13,8 +14,6 @@ document.addEventListener('DOMContentLoaded', () => {
   let dateTo = null;
   // day from
   let dateFrom = null;
-
-  const $searchEl = document.getElementsByClassName('js-search')[0];
 
   // initial form setting
   days = getDates().days;
