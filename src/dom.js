@@ -139,3 +139,19 @@ export function eventSettings() {
     $this.hide();
   });
 }
+
+export function getDateTo() {
+  return $( '#date-to' ).val() ? Date.parse( $( '#date-to' ).val() ) : null;
+}
+
+export function getDateFrom() {
+  return $( '#date-from' ).val() ? Date.parse( $( '#date-from' ).val() ) : null;
+}
+
+export function getCryptoAmount() {
+  return +$( '#amount' ).val() ? +$( '#amount' ).val() : null;
+}
+
+export function getFiat() {
+  return $( '#fiat' ).val() ? $( '#fiat' ).val() : null;
+}

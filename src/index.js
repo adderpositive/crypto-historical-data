@@ -7,7 +7,7 @@ import * as dom from './dom.js';
   // how many days - dateTo-dateFrom
   let days = 7;
   // currencies sorted by market capital
-  let cryptocurrenciesAmount = 10;
+  let amountOfCurrencies = 10;
   // to which prices you want to transfer
   let fiat = 'USD';
   // day to
@@ -24,27 +24,14 @@ import * as dom from './dom.js';
   $( '.js-search' ).click(() => {
     const data = {};
 
-    if ( $( '#date-to' ).val() ) {
-      dateTo = Date.parse( $( '#date-to' ).val() );
-    }
-
-    if ( $( '#date-from' ).val() ) {
-      dateFrom = Date.parse( $( '#date-from' ).val() );
-    }
-
-    if ( +$( '#amount' ).val() ) {
-      cryptocurrenciesAmount = +$( '#amount' ).val();
-    }
-
-    if ( $( '#fiat' ).val() ) {
-      fiat = $( '#fiat' ).val()
-    }
+    dateTo = dom.getDateTo();
+    dateFrom = dom.getDateFrom();
 
     if( dateTo > dateFrom ) {
       days = getDates( new Date( dateTo ), new Date( dateFrom ) ).days;
 
-      data.amountOfCurrencies = cryptocurrenciesAmount;
-      data.fiat = fiat;
+      data.amountOfCurrencies = dom.getCryptoAmount();;
+      data.fiat = dom.getFiat();
       data.days = days;
       data.timestamp = dateTo;
 
