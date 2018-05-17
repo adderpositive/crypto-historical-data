@@ -16,5 +16,4 @@ You can try demo [here](http://crypto-data.homolamartin.cz/).
 
 ## TODO
 - remove jQuery
-- fix dates when to date is lower then from date
 - add styles to rocket! <3

@@ -4,7 +4,7 @@ import init from './api.js';
 import * as dom from './dom.js';
 
 (function() {
-  // how many days from today
+  // how many days - dateTo-dateFrom
   let days = 7;
   // currencies sorted by market capital
   let cryptocurrenciesAmount = 10;
@@ -12,13 +12,15 @@ import * as dom from './dom.js';
   let fiat = 'USD';
   // day to
   let dateTo = null;
-  // day to
+  // day from
   let dateFrom = null;
 
+  // initial form setting
   days = getDates().days;
   dom.setDates();
+  dom.eventSettings();
 
-  // search data
+  // search data event
   $( '.js-search' ).click(() => {
     const data = {};
 
@@ -34,21 +36,21 @@ import * as dom from './dom.js';
       cryptocurrenciesAmount = +$( '#amount' ).val();
     }
 
-    if ( $( '#fiat' ).val().length ) {
+    if ( $( '#fiat' ).val() ) {
       fiat = $( '#fiat' ).val()
     }
 
-    days = getDates( new Date( dateTo ), new Date( dateFrom ) ).days;
+    if( dateTo > dateFrom ) {
+      days = getDates( new Date( dateTo ), new Date( dateFrom ) ).days;
 
-    data.amountOfCurrencies = cryptocurrenciesAmount;
-    data.fiat = fiat;
-    data.days = days;
-    data.timestamp = dateTo;
+      data.amountOfCurrencies = cryptocurrenciesAmount;
+      data.fiat = fiat;
+      data.days = days;
+      data.timestamp = dateTo;
 
-    init( data );
-
+      init( data );
+    } else {
+      alert('Date from can not be bigger then Date to!')
+    }
   });
-
-  dom.eventSettings();
-
 }());
