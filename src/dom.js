@@ -131,8 +131,8 @@ export function setDates() {
 }
 
 export function eventSettings() {
-  $( '.js-show-settings' ).click(() => {
-    const $this = $( this );
+  $( '.js-show-settings' ).click((event) => {
+    const $this = $( event.currentTarget );
     const $parent = $this.parents( '.settings-wrap' );
     
     $parent.find( '.settings' ).slideDown( 400 );
