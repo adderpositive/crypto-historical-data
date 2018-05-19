@@ -4,14 +4,16 @@ import {
   getDates
 } from './helpers.js';
 
+// preloader interval
 let interval = null;
 
 // preloader
 export function removePreloader() {
-  $( '.preloader' ).remove();
+  const $element = document.querySelector('.preloader');
+
+  $element.parentNode.removeChild($element);
   clearInterval( interval );
 }
-
 
 export function addPreloader() {
   $( 'body' ).append(
@@ -44,7 +46,6 @@ export function addTable( data ) {
   const isTableExist = $( '.js-table' )[ 0 ].childNodes.length;
   let i;
   let row;
-  
 
   for ( i in data ) {
     let j;
@@ -90,7 +91,8 @@ export function addTable( data ) {
       '</table>'
     );
   } else {
-    $( 'tbody > tr' ).remove();
+    const $element = document.querySelector('tbody > tr');
+    $element.parentNode.removeChild($element);
   }
 
   for ( row in $dataRows ) {
@@ -114,44 +116,56 @@ export function addButtons() {
 }
 
 export function addTableEvents() {
+  const $open = document.querySelector('.js-table-open');
+  const $close = document.querySelector('.js-table-close');
+  const $table = document.querySelector('.table-wrap');
+
   // add open event
-  $( '.js-table-open' ).click(() => {
-    $( '.table-wrap' ).addClass( 'active' );
+  $open.addEventListener('click', () => {
+    $table.classList.add('active');
   });
 
   // add close event
-  $( '.js-table-close' ).click(() => {
-    $( '.table-wrap' ).removeClass( 'active' );
+  $close.addEventListener('click', () => {
+    $table.classList.remove('active');
   });
 }
 
 export function setDates() {
-  $( '#date-to' ).val( formatDateForInput( getDates().dateFrom ) );
-  $( '#date-from' ).val( formatDateForInput( getDates().dateTo ) );
+  const $dateTo =  document.getElementById('date-to');
+  const $dateFrom =  document.getElementById('date-from');
+
+  $dateTo.value = formatDateForInput( getDates().dateFrom );
+  $dateFrom.value = formatDateForInput( getDates().dateTo );
 }
 
 export function eventSettings() {
-  $( '.js-show-settings' ).click((event) => {
-    const $this = $( event.currentTarget );
-    const $parent = $this.parents( '.settings-wrap' );
+  const $element = document.querySelector('.js-show-settings');
+
+  $element.addEventListener('click', () => {
+    const $parent = document.querySelector('.settings-wrap');
     
-    $parent.find( '.settings' ).slideDown( 400 );
-    $this.hide();
+    $parent.querySelector('.settings').style.display = 'block';
+    $element.style.display = 'none';
   });
 }
 
 export function getDateTo() {
-  return $( '#date-to' ).val() ? Date.parse( $( '#date-to' ).val() ) : null;
+  const value = document.getElementById('date-to').value;
+  return value ? Date.parse( value ) : null;
 }
 
 export function getDateFrom() {
-  return $( '#date-from' ).val() ? Date.parse( $( '#date-from' ).val() ) : null;
+  const value = document.getElementById('date-from').value;
+  return value ? Date.parse( value ) : null;
 }
 
 export function getCryptoAmount() {
-  return +$( '#amount' ).val() ? +$( '#amount' ).val() : null;
+  const value = +document.getElementById('amount').value;
+  return value ? value : null;
 }
 
 export function getFiat() {
-  return $( '#fiat' ).val() ? $( '#fiat' ).val() : null;
+  const value = document.getElementById('fiat').value;
+  return value ? value : null;
 }
