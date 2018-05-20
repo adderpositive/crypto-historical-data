@@ -101,11 +101,16 @@ export function addTable( data ) {
       '</table>';
       $tableWrap.appendChild( $newTable.firstChild );
   } else {
+    const $tbody = document.querySelector('tbody');
+    
+    while( $tbody.firstChild ) {
+      $tbody.removeChild( $tbody.firstChild );
+    }
   }
 
-  const $body = document.querySelector('tbody');
+  const $tbody = document.querySelector('tbody');
   for ( row in $dataRows ) {
-    $body.appendChild( $dataRows[ row ] );
+    $tbody.appendChild( $dataRows[ row ] );
   }
 }
 
