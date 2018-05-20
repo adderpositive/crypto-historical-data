@@ -1,4 +1,3 @@
-import $ from 'jquery';
 import { 
   formatDateForInput,
   getDates
@@ -11,39 +10,47 @@ let interval = null;
 export function removePreloader() {
   const $element = document.querySelector('.preloader');
 
-  $element.parentNode.removeChild($element);
+  $element.parentNode.removeChild( $element );
   clearInterval( interval );
 }
 
 export function addPreloader() {
-  $( 'body' ).append(
-    '<div class="preloader">' +
-    '<div class="rocket-trajectory">' +
-    '<div class="rocket">' +
-    '<i class="rocket__fuel rocket__fuel--1"></i>' +
-    '<i class="rocket__fuel rocket__fuel--2"></i>' +
-    '</div>' +
-    '</div>' +
-    '<div class="preloader__loading">Loading data<span class="js-dot"></span></div>' +
-    '</div>'
-  );
+  const $wrap = document.querySelector('body');
+  const $preloader = document.createElement('div');
 
+  $preloader.innerHTML =
+    '<div class="preloader">' +
+      '<div class="rocket-trajectory">' +
+        '<div class="rocket">' +
+          '<i class="rocket__fuel rocket__fuel--1"></i>' +
+          '<i class="rocket__fuel rocket__fuel--2"></i>' +
+        '</div>' +
+      '</div>' +
+      '<div class="preloader__loading">Loading data<span class="js-dot"></span></div>' +
+    '</div>';
+  
+  $wrap.appendChild( $preloader.firstChild );
+ 
   // animate loading dots
   interval = setInterval(() => {
-    const $dots = $( '.js-dot' );
-    const dotsLength = $dots.text().length < 3;
+    const $dots = document.querySelector('.js-dot');
+    let dotsText = $dots.innerText || $dots.textContent;
+    const dotsLength = dotsText.length < 3;
 
     if ( dotsLength ) {
-      $dots.text( $dots.text() + '.' );
+      dotsText += '.';
     } else {
-      $dots.text( '' );
+      dotsText = '';
     }
+
+    $dots.innerHTML = dotsText;
   }, 500 );
 }
 
 export function addTable( data ) {
   const $dataRows = [];
-  const isTableExist = $( '.js-table' )[ 0 ].childNodes.length;
+  const $tableWrap = document.querySelector('.js-table');
+  const isTableExist = $tableWrap.childNodes.length;
   let i;
   let row;
 
@@ -51,13 +58,14 @@ export function addTable( data ) {
     let j;
 
     for ( j in data[ i ].data ) {
+      const $row = document.createElement('tr');
       const date = new Date( data[ i ].data[ j ].time * 1000 );
-      const formattedDate = date.getDate() + '. ' +
-        ( date.getMonth() + 1 ) +
-        '. ' + date.getFullYear();
-
-      $dataRows.push( $(
-        '<tr>' +
+      const formattedDate = 
+        date.getDate() + '. ' +
+        ( date.getMonth() + 1 ) + '. ' +
+        date.getFullYear();
+      
+      $row.innerHTML = 
         '<td>' + formattedDate + '</td>' +
         '<td>' + data[ i ].name + '</td>' +
         '<td>' + data[ i ].data[ j ].close + '</td>' +
@@ -65,55 +73,59 @@ export function addTable( data ) {
         '<td>' + data[ i ].data[ j ].low + '</td>' +
         '<td>' + data[ i ].data[ j ].open + '</td>' +
         '<td>' + data[ i ].data[ j ].volumefrom + '</td>' +
-        '<td>' + data[ i ].data[ j ].volumeto + '</td>' +
-        '</tr>'
-      ) );
+        '<td>' + data[ i ].data[ j ].volumeto + '</td>';
+      
+      $dataRows.push( $row );
     }
   }
 
   // create table if not exist else remove data from body
   if ( !isTableExist ) {
-    $( '.js-table' ).append(
+    const $newTable = document.createElement('div');
+
+    $newTable.innerHTML =
       '<table class="u-full-width">' +
-      '<thead>' +
-      '<tr>' +
-      '<th>Date</th>' +
-      '<th>Coin</th>' +
-      '<th>Close</th>' +
-      '<th>High</th>' +
-      '<th>Low</th>' +
-      '<th>Open</th>' +
-      '<th>Volume from</th>' +
-      '<th>Volume to</th>' +
-      '</tr>' +
-      '</thead>' +
-      '<tbody></tbody>' +
-      '</table>'
-    );
+        '<thead>' +
+          '<tr>' +
+            '<th>Date</th>' +
+            '<th>Coin</th>' +
+            '<th>Close</th>' +
+            '<th>High</th>' +
+            '<th>Low</th>' +
+            '<th>Open</th>' +
+            '<th>Volume from</th>' +
+            '<th>Volume to</th>' +
+          '</tr>' +
+        '</thead>' +
+        '<tbody></tbody>' +
+      '</table>';
+      $tableWrap.appendChild( $newTable.firstChild );
   } else {
-    const $element = document.querySelector('tbody > tr');
-    $element.parentNode.removeChild($element);
   }
 
+  const $body = document.querySelector('tbody');
   for ( row in $dataRows ) {
-    $( 'tbody' ).append( $dataRows[ row ] );
+    $body.appendChild( $dataRows[ row ] );
   }
 }
 
 export function addButtons() {
-  const isButtonsExist = $( '.download-buttons' ).length;
+  const isButtonsExist = document.querySelector('.download-buttons') !== null;
 
   if ( !isButtonsExist ) {
-        
-    $( '#app' ).append(
+    const $app = document.getElementById('app');
+    const $buttons = document.createElement('div');
+
+    $buttons.innerHTML = 
       '<div class="button-wrap download-buttons">' +
-      '<a class="button" href="./data/data.json" download>Download .json</a><br />' +
-      '<a class="button" href="./data/data.csv" download>Download .csv</a><br />' +
-      '<a class="button js-table-open" href="#">Just show data</a>' +
-      '</div>'
-    );
+        '<a class="button" href="./data/data.json" download>Download .json</a><br />' +
+        '<a class="button" href="./data/data.csv" download>Download .csv</a><br />' +
+        '<a class="button js-table-open" href="#">Just show data</a>' +
+      '</div>';
+
+    $app.appendChild( $buttons.firstChild );
   }
-}
+} 
 
 export function addTableEvents() {
   const $open = document.querySelector('.js-table-open');
@@ -121,12 +133,12 @@ export function addTableEvents() {
   const $table = document.querySelector('.table-wrap');
 
   // add open event
-  $open.addEventListener('click', () => {
+  $open.addEventListener( 'click', () => {
     $table.classList.add('active');
   });
 
   // add close event
-  $close.addEventListener('click', () => {
+  $close.addEventListener( 'click', () => {
     $table.classList.remove('active');
   });
 }
@@ -142,7 +154,7 @@ export function setDates() {
 export function eventSettings() {
   const $element = document.querySelector('.js-show-settings');
 
-  $element.addEventListener('click', () => {
+  $element.addEventListener( 'click', () => {
     const $parent = document.querySelector('.settings-wrap');
     
     $parent.querySelector('.settings').style.display = 'block';

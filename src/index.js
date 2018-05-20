@@ -2,7 +2,7 @@ import { getDates } from './helpers.js';
 import init from './api.js';
 import * as dom from './dom.js';
 
-document.addEventListener('DOMContentLoaded', () => {
+document.addEventListener( 'DOMContentLoaded', () => {
   const $searchEl = document.getElementsByClassName('js-search')[0];
   // how many days - dateTo-dateFrom
   let days = 7;
@@ -21,7 +21,7 @@ document.addEventListener('DOMContentLoaded', () => {
   dom.eventSettings();
 
   // search data event
-  $searchEl.addEventListener('click', () => {
+  $searchEl.addEventListener( 'click', () => {
     const data = {};
 
     dateTo = dom.getDateTo();
