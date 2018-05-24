@@ -29,17 +29,25 @@ function getSingleCryptoData( data ) {
     timestamp /= 1000;
   }
 
-  return $.ajax({
-    url: './data-currency',
-    method: 'POST',
-    dataType: 'json',
-    data: {
+  const sendRequest = new Promise(( resolve, reject ) => {
+    const request = new XMLHttpRequest();
+    request.open('POST', './data-currency', true);
+    request.setRequestHeader('Content-Type', 'application/json; charset=UTF-8');
+    request.onload = () => {
+      if( request.status === 200 ) {
+        resolve( request.responseText );
+      }
+    };
+    request.send(JSON.stringify({
       fiat,    
       symbol,
       days,
       timestamp
-    }
+    }));
   });
+  
+
+  return sendRequest;
 }
 
 /********************
@@ -119,12 +127,12 @@ export default function init( data ) {
       }
 
       // aysnchronous operation - waiting for all requests will be done
-      $.when.apply( null, requests ).then((...args) => {
+      Promise.all( requests ).then(( operations ) => {
         let j;
         const isBTCException = fiat === 'BTC' && dataArray[ i ].symbol === 'BTC';
 
-        for ( j in args ) {
-          dataArray[ j ].data = args[ j ][ 0 ].Data;
+        for ( j in operations ) {
+          dataArray[ j ].data = JSON.parse(operations[j]).Data;
 
           if ( isBTCException ) {
             let h;
@@ -140,6 +148,7 @@ export default function init( data ) {
           }
         }
 
+        console.log( dataArray );
         saveFile( dataArray );
       });
     }
