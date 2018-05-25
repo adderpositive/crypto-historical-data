@@ -14,6 +14,32 @@ You can try demo [here](http://crypto-data.homolamartin.cz/).
 | 4. 5. 2018  | Bitcoin | 9699.61 | 9785.15 | 9547.21 | 9746.26 | 68689.75    | 663887678.35 |
 | 5. 5. 2018  | Bitcoin | 9845.9  | 9968.85 | 9687.09 | 9700.37 | 68875.75    |  679872376.4 |
 
+## Own manipulation
+
+### Install 
+```
+	$ yarn
+```
+or
+```
+	$ npm install
+```
+### Development
+```
+	$ yarn build
+```
+or
+```
+	$ npm run build
+```
+### Production
+```
+	$ yarn prod
+```
+or
+```
+	$ npm run prod
+```
+
 ## TODO
-- remove jQuery
 - add styles to rocket! <3
