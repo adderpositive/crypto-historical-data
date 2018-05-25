@@ -91,7 +91,6 @@ function processData( currenciesData, generalData ) {
   } = generalData;
   let i;
 
-  console.log( dataKeys );
   // sorted keys
   dataKeys.sort(( a, b ) => {
     return dataResponse[ a ].rank - dataResponse[ b ].rank;
