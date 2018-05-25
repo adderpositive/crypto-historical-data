@@ -58,20 +58,24 @@ function getSingleCryptoData( data ) {
  */
 function saveFile( data ) {
   const dataArray = data;
+  const request = new XMLHttpRequest();
+  
+  request.open('POST', './save', true);
+  request.setRequestHeader('Content-Type', 'application/json; charset=UTF-8');
 
-  $.ajax( {
-    url: './save',
-    method: 'POST',
-    dataType: 'json',
-    data: {
-      data: JSON.stringify( data )
-    },
-    success: ( response ) => {
-      dom.removePreloader();
-      dom.addButtons();
-      dom.addTableEvents();
-      dom.addTable( dataArray );
+  request.onload = () => {
+    if ( request.readyState === request.DONE ) {
+      if ( request.status === 200 ) {
+        dom.removePreloader();
+        dom.addButtons();
+        dom.addTableEvents();
+        dom.addTable( dataArray );
+      }
     }
+  }
+
+  request.send({
+    data: JSON.stringify( data )
   });
 }
 
