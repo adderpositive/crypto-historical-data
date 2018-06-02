@@ -28,7 +28,7 @@ $container['view'] = function ($container) {
     return $view;
 };
 
-$container['view']['version'] = '1.3.0';
+$container['view']['version'] = '1.3.1';
 
 $app->get('/', function ($request, $response, $args) {
     return $this->view->render($response, 'index.html');
