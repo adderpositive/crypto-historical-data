@@ -24,6 +24,7 @@ export function addPreloader() {
         '<div class="rocket">' +
           '<i class="rocket__fuel rocket__fuel--1"></i>' +
           '<i class="rocket__fuel rocket__fuel--2"></i>' +
+          '<i class="rocket__fire"></i>' +
         '</div>' +
       '</div>' +
       '<div class="preloader__loading">Loading data<span class="js-dot"></span></div>' +

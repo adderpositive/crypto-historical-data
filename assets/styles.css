@@ -80,6 +80,135 @@ input.button-primary--big {
   }
 }
 
+@-webkit-keyframes fuel-fall-1 {
+  0% {
+    bottom: 0;
+  }
+
+  5% {
+    bottom: 0;
+  }
+
+  100% {
+    bottom: -300vh;
+  }
+}
+
+@keyframes fuel-fall-1 {
+  0% {
+    bottom: 0;
+  }
+
+  5% {
+    bottom: 0;
+  }
+
+  100% {
+    bottom: -300vh;
+  }
+}
+
+@-webkit-keyframes fuel-off-1 {
+  0% {
+    opacity: 1;
+  }
+
+  3% {
+    opacity: 1;
+  }
+
+  5% {
+    opacity: 0;
+  }
+
+  100% {
+    opacity: 0;
+  }
+}
+
+@keyframes fuel-off-1 {
+  0% {
+    opacity: 1;
+  }
+
+  3% {
+    opacity: 1;
+  }
+
+  5% {
+    opacity: 0;
+  }
+
+  100% {
+    opacity: 0;
+  }
+}
+
+@-webkit-keyframes fuel-fall-2 {
+  0% {
+    bottom: 0;
+  }
+
+  15% {
+    bottom: 0;
+  }
+
+  100% {
+    bottom: -400vh;
+  }
+}
+
+@keyframes fuel-fall-2 {
+  0% {
+    bottom: 0;
+  }
+
+  15% {
+    bottom: 0;
+  }
+
+  100% {
+    bottom: -400vh;
+  }
+}
+
+@-webkit-keyframes fuel-off-2 {
+  0% {
+    opacity: 1;
+  }
+
+  13% {
+    opacity: 1;
+  }
+
+  15% {
+    opacity: 0;
+  }
+
+  100% {
+    opacity: 0;
+  }
+}
+
+@keyframes fuel-off-2 {
+  0% {
+    opacity: 1;
+  }
+
+  13% {
+    opacity: 1;
+  }
+
+  15% {
+    opacity: 0;
+  }
+
+  100% {
+    opacity: 0;
+  }
+}
+
+
 .rocket-trajectory {
   position: absolute;
   top: 0;
@@ -106,8 +235,17 @@ input.button-primary--big {
   border-radius: 50% 50% 0 0;
 }
 
-.rocket__fuel {
+.rocket::after {
   content: "";
+  position: absolute;
+  height: 30px;
+  width: 5px;
+  top: 50%;
+  left: 50%;
+  background-color: #c1c1c1;
+}
+
+.rocket__fuel {
   position: absolute;
   bottom: 0;
   width: 15px;
@@ -115,15 +253,89 @@ input.button-primary--big {
   background-color: #c1c1c1;
 }
 
+.rocket__fuel::after {
+  content: "";
+  position: absolute;
+  top: 100%;
+  left: 0;
+  border-left: 7px solid transparent;
+  border-right: 8px solid transparent;
+  border-top: 15px solid #ff0;
+}
+
+.rocket__fuel::before {
+  content: "";
+  position: absolute;
+  top: 100%;
+  left: 5px;
+  margin-top: 3px;
+  border-left: 3px solid transparent;
+  border-right: 3px solid transparent;
+  border-top: 6px solid #ffa500;
+  z-index: 10;
+}
+
 .rocket__fuel--1 {
   right: -15px;
   border-top-right-radius: 100% 25%;
+  -webkit-animation-name: fuel-fall-1;
+          animation-name: fuel-fall-1;
+  -webkit-animation-duration: 20s;
+          animation-duration: 20s;
+  -webkit-animation-iteration-count: infinite;
+          animation-iteration-count: infinite;
+}
+
+.rocket__fuel--1::after,
+.rocket__fuel--1::before {
+  -webkit-animation-name: fuel-off-1;
+          animation-name: fuel-off-1;
+  -webkit-animation-duration: 20s;
+          animation-duration: 20s;
+  -webkit-animation-iteration-count: infinite;
+          animation-iteration-count: infinite;
 }
 
 .rocket__fuel--2 {
   left: -15px;
   height: 70px;
   border-top-left-radius: 100% 25%;
+  -webkit-animation-name: fuel-fall-2;
+          animation-name: fuel-fall-2;
+  -webkit-animation-duration: 20s;
+          animation-duration: 20s;
+  -webkit-animation-iteration-count: infinite;
+          animation-iteration-count: infinite;
+}
+
+.rocket__fuel--2::after,
+.rocket__fuel--2::before {
+  -webkit-animation-name: fuel-off-2;
+          animation-name: fuel-off-2;
+  -webkit-animation-duration: 20s;
+          animation-duration: 20s;
+  -webkit-animation-iteration-count: infinite;
+          animation-iteration-count: infinite;
+}
+
+.rocket__fire {
+  position: absolute;
+  top: 100%;
+  left: 0;
+  border-left: 20px solid transparent;
+  border-right: 20px solid transparent;
+  border-top: 20px solid #ff0;
+}
+
+.rocket__fire::after {
+  content: "";
+  position: absolute;
+  top: -16px;
+  left: -7px;
+  border-left: 8px solid transparent;
+  border-right: 8px solid transparent;
+  border-top: 10px solid #ffa500;
+  z-index: 10;
 }
 
 .page {

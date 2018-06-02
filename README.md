@@ -42,4 +42,3 @@ or
 ```
 
 ## TODO
-- add styles to rocket! <3
